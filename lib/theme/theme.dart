@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
+  progressIndicatorTheme:
+      const ProgressIndicatorThemeData(color: Colors.yellow),
   // primarySwatch: Colors.yellow,
-  // primaryColor: Colors.yellow,
-  // colorSchemeSeed: Colors.yellowAccent,
+  // primaryColor: Colors.deepOrange,
+  colorSchemeSeed: Colors.yellow,
+  // colorScheme: ColorScheme(brightness: brightness, primary: primary, onPrimary: onPrimary, secondary: secondary, onSecondary: onSecondary, error: error, onError: onError, surface: surface, onSurface: onSurface),
   // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
   // dividerColor: Colors.white24,
+  dividerTheme: const DividerThemeData(color: Colors.white24),
   appBarTheme: const AppBarTheme(
       backgroundColor: Color.fromARGB(255, 31, 31, 31),
       centerTitle: true,
