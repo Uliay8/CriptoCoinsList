@@ -27,6 +27,11 @@ final darkTheme = ThemeData(
         color: Colors.white.withOpacity(0.6),
         fontWeight: FontWeight.w700,
         fontSize: 14,
+      ),
+      headlineMedium: const TextStyle(
+        color: Colors.white,
+        fontSize: 28,
       )),
+
   useMaterial3: true,
 );
