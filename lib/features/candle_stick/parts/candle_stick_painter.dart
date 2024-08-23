@@ -59,29 +59,10 @@ class CandleStickPainter extends CustomPainter {
           candlePaint);
       centerX += offsetWidth;
     }
-
-    // var square = Rect.fromLTWH(0, 0, size.width, size.height);
-    // canvas.drawRect(square, rectPaint);
-
-    // final dataPath = Path();
-    // if (points.isNotEmpty) {
-    //   dataPath.moveTo(points.first.x * size.width,
-    //       size.height - points.first.y * size.height);
-    // }
-    // for (var point in points.skip(1)) {
-    //   dataPath.lineTo(
-    //       point.x * size.width, size.height - point.y * size.height);
-    // }
-    // canvas.drawPath(dataPath, _linesPaint);
-
-    // final axisPath = Path();
-    // axisPath.lineTo(0, size.height);
-    // axisPath.lineTo(size.width, size.height);
-    // canvas.drawPath(axisPath, _axisPaint);
   }
 
   @override
-  bool shouldRepaint(covariant CandleStickPainter oldPainter) {
-    return (points != oldPainter.points);
+  bool shouldRepaint(covariant CandleStickPainter oldDelegate) {
+    return (points != oldDelegate.points);
   }
 }

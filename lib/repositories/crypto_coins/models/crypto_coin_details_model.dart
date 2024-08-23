@@ -1,14 +1,16 @@
 import 'package:cripto_coins_list/repositories/crypto_coins/models/candle_stick_model.dart';
+import 'package:equatable/equatable.dart';
 
-class CryptoCoinDetailsModel {
+class CryptoCoinDetailsModel extends Equatable {
   final String name;
   final String imageURL;
-  final DateTime dateFrom;
-  final DateTime dateTo;
   final double minLow;
   final double priceRange;
   final List<CandleStickModel> list;
 
-  CryptoCoinDetailsModel(this.name, this.imageURL, this.dateFrom, this.dateTo,
-      this.minLow, this.priceRange, this.list);
+  CryptoCoinDetailsModel(
+      this.name, this.imageURL, this.minLow, this.priceRange, this.list);
+
+  @override
+  List<Object?> get props => [name, imageURL, minLow, priceRange, list];
 }

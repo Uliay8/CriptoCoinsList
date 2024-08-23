@@ -34,10 +34,6 @@ class CryptoCoinsRepository implements AbstractCoinsReprository {
 
     var data = response.data as Map<String, dynamic>;
     data = data['Data'] as Map<String, dynamic>;
-    final DateTime timeFrom =
-        DateTime.fromMillisecondsSinceEpoch(data['TimeFrom'] * 1000);
-    final DateTime timeTo =
-        DateTime.fromMillisecondsSinceEpoch(data['TimeTo'] * 1000);
     final arrayOfDays = data['Data'] as List<dynamic>;
 
     double maxHigh = 0.0;
@@ -58,8 +54,8 @@ class CryptoCoinsRepository implements AbstractCoinsReprository {
     }
     // listOfCandleModels.removeLast();
     var priceRange = maxHigh - minLow;
-    final coinDetails = CryptoCoinDetailsModel(name, imageUrl, timeFrom, timeTo,
-        minLow, priceRange, listOfCandleModels);
+    final coinDetails = CryptoCoinDetailsModel(
+        name, imageUrl, minLow, priceRange, listOfCandleModels);
     return coinDetails;
   }
 }
