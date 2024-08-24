@@ -1,7 +1,7 @@
-import 'package:cripto_coins_list/repositories/crypto_coins/abstract_coins_reprository.dart';
-import 'package:cripto_coins_list/repositories/crypto_coins/models/candle_stick_model.dart';
-import 'package:cripto_coins_list/repositories/crypto_coins/models/crypto_coin_details_model.dart';
-import 'package:cripto_coins_list/repositories/crypto_coins/models/crypto_coin_model.dart';
+import 'package:crypto_coins_list/repositories/crypto_coins/abstract_coins_reprository.dart';
+import 'package:crypto_coins_list/repositories/crypto_coins/models/candle_stick_model.dart';
+import 'package:crypto_coins_list/repositories/crypto_coins/models/crypto_coin_details_model.dart';
+import 'package:crypto_coins_list/repositories/crypto_coins/models/crypto_coin_model.dart';
 import 'package:dio/dio.dart';
 
 class CryptoCoinsRepository implements AbstractCoinsReprository {

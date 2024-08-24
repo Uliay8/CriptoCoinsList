@@ -1,7 +1,7 @@
-import 'package:cripto_coins_list/features/crypto_coin/bloc/crypto_coin_bloc.dart';
-import 'package:cripto_coins_list/features/crypto_coin/widgets/coin_tile_with_percent.dart';
-import 'package:cripto_coins_list/features/crypto_coin/widgets/widget.dart';
-import 'package:cripto_coins_list/repositories/crypto_coins/models/crypto_coin_model.dart';
+import 'package:crypto_coins_list/features/crypto_coin/bloc/crypto_coin_bloc.dart';
+import 'package:crypto_coins_list/features/crypto_coin/widgets/coin_tile_with_percent.dart';
+import 'package:crypto_coins_list/features/crypto_coin/widgets/widget.dart';
+import 'package:crypto_coins_list/repositories/crypto_coins/models/crypto_coin_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
