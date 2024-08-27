@@ -41,8 +41,8 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
     setState(() {});
     _cryptoCoinBloc =
         CryptoCoinBloc(GetIt.instance<AbstractCoinsReprository>());
-    _cryptoCoinBloc
-        .add(LoadCryptoCoin(nameCoin: coin!.name, imageURL: coin!.imageURL));
+    _cryptoCoinBloc.add(LoadCryptoCoin(
+        nameCoin: coin!.name, imageURL: coin!.details.fullImageUrl));
     super.didChangeDependencies();
   }
 
@@ -64,7 +64,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                 padding: const EdgeInsets.only(right: 10),
                 child: Image.network(
                   // widget.coin.imageURL,
-                  coin!.imageURL,
+                  coin!.details.fullImageUrl,
                   width: 30,
                   height: 30,
                 ),
@@ -80,11 +80,13 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
         bloc: _cryptoCoinBloc,
         builder: (context, state) {
           if (state is CryptoCoinLoaded) {
+            final coin = state.coin;
             return Column(
               children: [
                 CoinTileWithPercent(
-                    openPeriodPrice: state.coinDetails.list.first.open,
-                    closePeriodPrice: state.coinDetails.list.last.close),
+                    openPeriodPrice: coin.candleSticks?.list.first.open ?? 0.0,
+                    closePeriodPrice:
+                        coin.candleSticks?.list.last.close ?? 0.0),
                 Stack(
                   children: [
                     Container(
@@ -92,13 +94,13 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                         height: 350,
                         padding: const EdgeInsets.only(
                             left: 8, right: 20, top: 10, bottom: 10),
-                        child: GridGraph(cryptoCoinDetails: state.coinDetails)),
+                        child: GridGraph(candleSticks: coin.candleSticks!)),
                     Container(
                         width: double.infinity,
                         height: 350,
                         padding: const EdgeInsets.only(
                             left: 70, right: 20, top: 10, bottom: 10),
-                        child: CoinGraph(cryptoCoinDetails: state.coinDetails))
+                        child: CoinGraph(candleSticks: coin.candleSticks!))
                   ],
                 )
               ],
@@ -125,7 +127,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                             // nameCoin: widget.coin.name,
                             // imageURL: widget.coin.imageURL));
                             nameCoin: coin!.name,
-                            imageURL: coin!.imageURL));
+                            imageURL: coin!.details.fullImageUrl));
                       },
                       child: const Text("Try again"))
                 ],
