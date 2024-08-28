@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto_coins_list/features/crypto_coin/bloc/crypto_coin_bloc.dart';
 import 'package:crypto_coins_list/features/crypto_coin/widgets/coin_tile_with_percent.dart';
 import 'package:crypto_coins_list/features/crypto_coin/widgets/widget.dart';
@@ -7,46 +8,44 @@ import 'package:crypto_coins_list/repositories/crypto_coins/models/crypto_coin_m
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
 import '../../../repositories/crypto_coins/abstract_coins_reprository.dart';
 import '../../candle_stick/candle_stick.dart';
 
+@RoutePage()
 class CryptoCoinScreen extends StatefulWidget {
-  const CryptoCoinScreen({
-    super.key,
-    // required this.coin
-  });
-  // final CryptoCoinModel coin;
+  const CryptoCoinScreen({super.key, required this.coin});
+  final CryptoCoinModel coin;
 
   @override
   State<CryptoCoinScreen> createState() => _CryptoCoinScreenState();
 }
 
 class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
-  CryptoCoinModel? coin;
-  CryptoCoinBloc _cryptoCoinBloc =
+  // CryptoCoinModel? coin;
+  final CryptoCoinBloc _cryptoCoinBloc =
       CryptoCoinBloc(GetIt.instance<AbstractCoinsReprository>());
 
   @override
   void initState() {
-    // _cryptoCoinBloc.add(LoadCryptoCoin(
-    // nameCoin: widget.coin.name, imageURL: widget.coin.imageURL));
+    _cryptoCoinBloc.add(LoadCryptoCoin(
+        nameCoin: widget.coin.name,
+        imageURL: widget.coin.details.fullImageUrl));
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    final args = ModalRoute.of(context)?.settings.arguments;
-    assert(args != null && args is CryptoCoinModel,
-        'You must provide CryptoCoin argument');
-    coin = args as CryptoCoinModel;
-    setState(() {});
-    _cryptoCoinBloc =
-        CryptoCoinBloc(GetIt.instance<AbstractCoinsReprository>());
-    _cryptoCoinBloc.add(LoadCryptoCoin(
-        nameCoin: coin!.name, imageURL: coin!.details.fullImageUrl));
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   final args = ModalRoute.of(context)?.settings.arguments;
+  //   assert(args != null && args is CryptoCoinModel,
+  //       'You must provide CryptoCoin argument');
+  //   coin = args as CryptoCoinModel;
+  //   setState(() {});
+  //   _cryptoCoinBloc =
+  //       CryptoCoinBloc(GetIt.instance<AbstractCoinsReprository>());
+  //   _cryptoCoinBloc.add(LoadCryptoCoin(
+  //       nameCoin: coin!.name, imageURL: coin!.details.fullImageUrl));
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -65,15 +64,15 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
               Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: Image.network(
-                  // widget.coin.imageURL,
-                  coin!.details.fullImageUrl,
+                  widget.coin.details.fullImageUrl,
+                  // coin!.details.fullImageUrl,
                   width: 30,
                   height: 30,
                 ),
               ),
-              Text(
-                  // widget.coin.name
-                  coin!.name)
+              Text(widget.coin.name
+                  // coin!.name
+                  )
             ],
           ),
         ),
@@ -82,8 +81,8 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
         onRefresh: () async {
           final completer = Completer();
           _cryptoCoinBloc.add(LoadCryptoCoin(
-              nameCoin: coin!.name,
-              imageURL: coin!.details.fullImageUrl,
+              nameCoin: widget.coin.name,
+              imageURL: widget.coin.details.fullImageUrl,
               completer: completer));
           return completer.future;
         },
@@ -138,8 +137,8 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                           _cryptoCoinBloc.add(LoadCryptoCoin(
                               // nameCoin: widget.coin.name,
                               // imageURL: widget.coin.imageURL));
-                              nameCoin: coin!.name,
-                              imageURL: coin!.details.fullImageUrl));
+                              nameCoin: widget.coin.name,
+                              imageURL: widget.coin.details.fullImageUrl));
                         },
                         child: const Text("Try again"))
                   ],

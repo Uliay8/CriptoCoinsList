@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto_coins_list/features/crypto_list/bloc/crypto_list_bloc.dart';
 import 'package:crypto_coins_list/repositories/crypto_coins/abstract_coins_reprository.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import '../widgets/widget.dart';
 
+@RoutePage()
 class CryptoScreenList extends StatefulWidget {
   const CryptoScreenList({
     super.key,
@@ -23,7 +25,6 @@ class _CryptoScreenListState extends State<CryptoScreenList> {
 
   @override
   void initState() {
-    // _loadCryptoCoins();
     _cryptoListBloc.add(LoadCryptoList());
     super.initState();
   }
@@ -95,27 +96,6 @@ class _CryptoScreenListState extends State<CryptoScreenList> {
               return const Center(child: CircularProgressIndicator());
             },
           ),
-        )
-        // RefreshIndicator(
-        //   onRefresh: _loadCryptoCoins,
-        //   child:
-        // (_cryptoCoinsList == null)
-        //     ? const Center(child: CircularProgressIndicator())
-        //     : ListView.separated(
-        //         padding: const EdgeInsets.only(top: 8),
-        //         itemCount: _cryptoCoinsList!.length,
-        //         separatorBuilder: (context, index) => const Divider(),
-        //         itemBuilder: (context, i) {
-        //           final coin = _cryptoCoinsList![i];
-        //           return CryptoCoinTile(coin: coin);
-        //         }),
-        // ),
-        );
+        ));
   }
-
-  // Future<void> _loadCryptoCoins() async {
-  //   _cryptoCoinsList =
-  //       await GetIt.instance<AbstractCoinsReprository>().getCoinsList();
-  //   setState(() {});
-  // }
 }
