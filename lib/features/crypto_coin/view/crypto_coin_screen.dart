@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crypto_coins_list/features/crypto_coin/bloc/crypto_coin_bloc.dart';
 import 'package:crypto_coins_list/features/crypto_coin/widgets/coin_tile_with_percent.dart';
 import 'package:crypto_coins_list/features/crypto_coin/widgets/widget.dart';
@@ -51,10 +53,10 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
+        // leading: const Icon(
+        //   Icons.arrow_back,
+        //   color: Colors.white,
+        // ),
         title: Padding(
           padding: const EdgeInsets.only(right: 50),
           child: Row(
@@ -76,66 +78,77 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
           ),
         ),
       ),
-      body: BlocBuilder<CryptoCoinBloc, CryptoCoinState>(
-        bloc: _cryptoCoinBloc,
-        builder: (context, state) {
-          if (state is CryptoCoinLoaded) {
-            final coin = state.coin;
-            return Column(
-              children: [
-                CoinTileWithPercent(
-                    openPeriodPrice: coin.candleSticks?.list.first.open ?? 0.0,
-                    closePeriodPrice:
-                        coin.candleSticks?.list.last.close ?? 0.0),
-                Stack(
-                  children: [
-                    Container(
-                        width: double.infinity,
-                        height: 350,
-                        padding: const EdgeInsets.only(
-                            left: 8, right: 20, top: 10, bottom: 10),
-                        child: GridGraph(candleSticks: coin.candleSticks!)),
-                    Container(
-                        width: double.infinity,
-                        height: 350,
-                        padding: const EdgeInsets.only(
-                            left: 70, right: 20, top: 10, bottom: 10),
-                        child: CoinGraph(candleSticks: coin.candleSticks!))
-                  ],
-                )
-              ],
-            );
-          }
-          if (state is CryptoCoinLoadingFailure) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Something went wrong...",
-                    style: theme.textTheme.headlineMedium,
-                  ),
-                  Text(
-                    "Please try again later",
-                    style: theme.textTheme.labelSmall?.copyWith(fontSize: 16),
-                  ),
-                  const SizedBox(height: 30),
-                  TextButton(
-                      onPressed: () {
-                        _cryptoCoinBloc.add(LoadCryptoCoin(
-                            // nameCoin: widget.coin.name,
-                            // imageURL: widget.coin.imageURL));
-                            nameCoin: coin!.name,
-                            imageURL: coin!.details.fullImageUrl));
-                      },
-                      child: const Text("Try again"))
-                ],
-              ),
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
+      body: RefreshIndicator(
+        onRefresh: () async {
+          final completer = Completer();
+          _cryptoCoinBloc.add(LoadCryptoCoin(
+              nameCoin: coin!.name,
+              imageURL: coin!.details.fullImageUrl,
+              completer: completer));
+          return completer.future;
         },
+        child: BlocBuilder<CryptoCoinBloc, CryptoCoinState>(
+          bloc: _cryptoCoinBloc,
+          builder: (context, state) {
+            if (state is CryptoCoinLoaded) {
+              final coin = state.coin;
+              return Column(
+                children: [
+                  CoinTileWithPercent(
+                      openPeriodPrice:
+                          coin.candleSticks?.list.first.open ?? 0.0,
+                      closePeriodPrice:
+                          coin.candleSticks?.list.last.close ?? 0.0),
+                  Stack(
+                    children: [
+                      Container(
+                          width: double.infinity,
+                          height: 350,
+                          padding: const EdgeInsets.only(
+                              left: 8, right: 20, top: 10, bottom: 10),
+                          child: GridGraph(candleSticks: coin.candleSticks!)),
+                      Container(
+                          width: double.infinity,
+                          height: 350,
+                          padding: const EdgeInsets.only(
+                              left: 70, right: 20, top: 10, bottom: 10),
+                          child: CoinGraph(candleSticks: coin.candleSticks!))
+                    ],
+                  )
+                ],
+              );
+            }
+            if (state is CryptoCoinLoadingFailure) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Something went wrong...",
+                      style: theme.textTheme.headlineMedium,
+                    ),
+                    Text(
+                      "Please try again later",
+                      style: theme.textTheme.labelSmall?.copyWith(fontSize: 16),
+                    ),
+                    const SizedBox(height: 30),
+                    TextButton(
+                        onPressed: () {
+                          _cryptoCoinBloc.add(LoadCryptoCoin(
+                              // nameCoin: widget.coin.name,
+                              // imageURL: widget.coin.imageURL));
+                              nameCoin: coin!.name,
+                              imageURL: coin!.details.fullImageUrl));
+                        },
+                        child: const Text("Try again"))
+                  ],
+                ),
+              );
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }

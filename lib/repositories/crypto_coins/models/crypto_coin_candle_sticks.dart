@@ -1,10 +1,18 @@
 import 'package:equatable/equatable.dart';
-
 import 'candle_stick_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
+part 'crypto_coin_candle_sticks.g.dart';
+
+@HiveType(typeId: 2)
 class CryptoCoinCandleSticks extends Equatable {
+  @HiveField(0)
   final double minLow;
+
+  @HiveField(1)
   final double priceRange;
+
+  @HiveField(3)
   final List<CandleStickModel> list;
 
   const CryptoCoinCandleSticks(
@@ -36,9 +44,7 @@ class CryptoCoinCandleSticks extends Equatable {
       minLow =
           (item['low'].toDouble() < minLow) ? item['low'].toDouble() : minLow;
     }
-    // listOfCandleModels.removeLast();
     var priceRange = maxHigh - minLow;
-    // final coinDetails = CryptoCoinModel(name: name, details: details);
     return (listOfCandleModels, minLow, priceRange);
   }
 
