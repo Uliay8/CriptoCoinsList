@@ -2,15 +2,14 @@
 
 A new Flutter project.
 
-## Getting Started
+Описание проекта:
+Открывается список 10 криптовалют, запрашивается их стоимость в долларах. По каждой криптовалюте можно открыть экран с подробностями, где представлен график японских свечей за последние 30 дней и показывается процент, на который валюта выросла / упала за месяц.
 
-This project is a starting point for a Flutter application.
+Демонстрация работы:
+В папке assets/images можно посмотреть, как выглядят два экрана приложения.
+гифка:
+![hippo](./assets/images/гифкаРыботыПриложения.gif)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Для запуска проекта:
+достаточно версии flutter 3.24.3 • Dart 3.5.3 • DevTools 2.37.3
+запуск из файла main.dart
